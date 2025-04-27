@@ -5,37 +5,39 @@ namespace App\Http\Controllers;
 use App\Models\Home;
 use App\Models\about;
 use App\Models\gallery;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\StoregalleryRequest;
-use App\Http\Requests\UpdategalleryRequest;
 
-class GalleryController extends Controller
+class galleryController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Display a listing of the resource (Frontend).
      */
     public function index_fr()
-    {   $home = Home::all();
+    {
+        $home = Home::all();
         $about = about::all();
-         $gallery = DB::table('galleries') -> get();
-        // mengirim data blog ke view 
-        return view('frontend.gallery', ['gallery' => $gallery,
-     'about' => $about,
-            'home' => $home]);
+        $gallery = gallery::paginate(9); // Paginate 9 items per page (Frontend)
+
+        return view('frontend.gallery', [
+            'gallery' => $gallery,
+            'about' => $about,
+            'home' => $home,
+        ]);
     }
+
+    /**
+     * Display a listing of the resource (Dashboard).
+     */
     public function index()
     {
-         $gallery = DB::table('galleries') -> get();
-        // mengirim data blog ke view 
-        return view('dashboard.gallery', ['gallery' => $gallery]);
+        $gallery = gallery::paginate(5); // Paginate 10 items per page (Admin)
+
+        return view('dashboard.gallery', compact('gallery'));
     }
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -44,37 +46,32 @@ class GalleryController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoregalleryRequest  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoregalleryRequest $request)
+    public function store(Request $request)
     {
-         $request->validate([
-            'name' => 'required',
-            'title' => 'required',
+        $request->validate([
+            'name'  => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-  
-        $input = $request->all();
-  
-        if ($image = $request->file('image')) {
+
+        $input = $request->only('name', 'title');
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
             $destinationPath = 'image/';
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $profileImage);
-            $input['image'] = "$profileImage";
+            $image->move(public_path($destinationPath), $profileImage);
+            $input['image'] = $profileImage;
         }
-    
-        Gallery::create($input);
-     
-        return redirect('/dashboard/gallery');
+
+        gallery::create($input);
+
+        return redirect('/dashboard/gallery')->with('success', 'gallery item created successfully.');
     }
 
     /**
      * Display the specified resource.
-     *
-     * @param  \App\Models\gallery  $gallery
-     * @return \Illuminate\Http\Response
      */
     public function show(gallery $gallery)
     {
@@ -83,54 +80,61 @@ class GalleryController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\gallery  $gallery
-     * @return \Illuminate\Http\Response
      */
-    public function edit(gallery $gallery,$id)
+    public function edit($id)
     {
-         $gallery = DB::table('galleries')->where('id', $id)->first();
-        return view('dashboard.gallery-edit', compact('gallery'));   
+        $gallery = gallery::findOrFail($id);
+
+        return view('dashboard.gallery-edit', compact('gallery'));
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdategalleryRequest  $request
-     * @param  \App\Models\gallery  $gallery
-     * @return \Illuminate\Http\Response
      */
-    public function update(UpdategalleryRequest $request, gallery $gallery)
+    public function update(Request $request, $id)
     {
-     $request->validate([
-            'name' => 'required',
-            'title' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        $gallery = gallery::findOrFail($id);
+
+        $request->validate([
+            'name'  => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-  
-        $input = $request->all();
-  
-        if ($image = $request->file('image')) {
+
+        $input = $request->only('name', 'title');
+
+        if ($request->hasFile('image')) {
+            // Hapus image lama jika ada
+            if ($gallery->image && file_exists(public_path('image/' . $gallery->image))) {
+                unlink(public_path('image/' . $gallery->image));
+            }
+
+            $image = $request->file('image');
             $destinationPath = 'image/';
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $profileImage);
-            $input['image'] = "$profileImage";
-        }else{
-            unset($input['image']);
+            $image->move(public_path($destinationPath), $profileImage);
+            $input['image'] = $profileImage;
         }
-          $gallery->update($input);
-    return redirect('/dashboard/gallery');
+
+        $gallery->update($input);
+
+        return redirect('/dashboard/gallery')->with('success', 'gallery item updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\gallery  $gallery
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(gallery $gallery,$id)
+    public function destroy($id)
     {
-        DB::table('galleries')->where('id', $id)->delete();
-        return redirect('/dashboard/gallery');
+        $gallery = gallery::findOrFail($id);
+
+        // Hapus gambar di folder jika ada
+        if ($gallery->image && file_exists(public_path('image/' . $gallery->image))) {
+            unlink(public_path('image/' . $gallery->image));
+        }
+
+        $gallery->delete();
+
+        return redirect('/dashboard/gallery')->with('success', 'gallery item deleted successfully.');
     }
 }

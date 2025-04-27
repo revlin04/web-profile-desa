@@ -32,12 +32,7 @@
             data-wow-duration="1.3s"
             data-wow-delay="0.8s">
             {{ $home->text }}
-          </p>
-          <a
-            href="#features"
-            class="page-scroll main-btn gradient-btn gradient-btn-2 wow fadeInUp"
-            data-wow-duration="1.3s"
-            data-wow-delay="1.1s">Get Started</a>
+          </p>  
         </div>
         <!-- header hero content -->
       </div>
@@ -63,7 +58,76 @@
 </div>
 <!-- header hero -->
 </header>
+<style type="text/css">
+      .pagination li{
+        float: left;
+        list-style-type: none;
+        margin:5px;
+      }
+    </style>
 
+
+      <section id="blog" class="blog-area pt-120">
+        <div class="container">
+          <div class="row">
+            <div class="w-full lg:w-1/2">
+              <div class="pb-8 section-title">
+                <div class="line"></div>
+                <h3 class="title"><span>Our Recent</span> News Posts</h3>
+              </div>
+              <!-- section title -->
+            </div>
+          </div>
+          <!-- row -->
+          <label class="relative block">
+            <form action="/blog">
+            <span class="sr-only">Search</span>
+            <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+              <svg class="h-5 w-5 fill-gray-300" viewBox="0 0 20 20"><!-- ... --></svg>
+            </span>
+            <div class="grid grid-cols-6 gap-4">
+              <input class="col-span-5 placeholder:italic placeholder:text-gray-400 block bg-white border border-gray-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" placeholder="Search for anything..." type="text" name="search"/>
+            <button class="p-1 bg-red-300 hover:bg-red-600 hover:drop-shadow-lg text-gray-100 rounded-lg  border-red-300" type="submit">Cari</button>  </div>
+            </form>
+          </label>
+        
+          <div class="justify-center row">
+            @forelse ($blog as $blog)
+                <div class="w-full md:w-2/3 lg:w-1/3">
+              <div
+                class="mx-4 mt-10 single-blog wow fadeIn"
+                data-wow-duration="1s"
+                data-wow-delay="0.2s"
+              >
+                <div class="mb-5 max-h-60 overflow-hidden blog-image rounded-xl">
+                  <img class="w-full" src="/image/{{ $blog->image }}" alt="blog" />
+                </div>
+                <div class="blog-content">
+                  <ul class="flex mb-5 meta">
+                    <li>Author: <a href="javascript:void(0)">{{ $blog->author }}</a></li>
+                    <li class="ml-12">{{ date('d-m-Y', strtotime($blog->created_at)); }}</li>
+                  </ul>
+                  <p class="mb-6 text-2xl leading-snug text-gray-900">
+                    {{ $blog->title }}
+                  </p>
+                  <a class="text-theme-color-2" href="/blog/{{ $blog->title }}">
+                    Baca Selengkapnya
+                    <i class="ml-2 lni lni-chevron-right"></i>
+                  </a>
+                </div>
+              </div>
+              <!-- single blog -->
+            </div>
+            @empty
+                <h2 class="mt-20 text-2xl	font-extrabold	">Oh Tidak Halaman Masih Kosong ...</h2>
+            @endforelse
+            
+            
+          </div>
+          <!-- row -->
+        </div>
+        <!-- container -->
+      </section>
 <div class="pt-24 brand-area">
   <div class="container">
     <div class="row">
@@ -103,6 +167,7 @@
           </div> <!-- section title -->
         </div>
       </div> <!-- row -->
+      
       <div class="justify-center row ">
 
         @foreach ($card as $card)
@@ -199,9 +264,6 @@
             <div class="lg:mt-12 subscribe-content">
               <h1 class="text-2xl font-bold sm:text-4xl subscribe-title">
 
-                {{ $home->title }}
-
-
                 <span class="block font-normal"></span>
               </h1>
             </div>
@@ -254,13 +316,6 @@
               </div>
               <ul class="contact">
 
-
-                <li>{{ $about->phone }}</li>
-                <li>{{ $about->emails }}</li>
-
-                <li>
-                  {{ $about->locations }}
-                </li>
 
               </ul>
             </div>
