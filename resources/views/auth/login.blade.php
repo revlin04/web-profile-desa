@@ -62,11 +62,11 @@
             <div class="mt-6 pt-6 border-t border-gray-200 flex flex-col items-center text-sm">
                 <p class="text-gray-600">{{ __('Don\'t have an account?') }}</p>
                 <div class="mt-2 space-x-3">
-                    <a href="/" class="text-blue-600 hover:text-blue-800 font-medium hover:underline">
+                    <a href="{{route('register')}}" class="text-blue-600 hover:text-blue-800 font-medium hover:underline">
                         {{ __('Sign up') }}
                     </a>
                     <span class="text-gray-400">|</span>
-                    <a href="/" class="text-blue-600 hover:text-blue-800 font-medium hover:underline">
+                    <a href="{{route('password.request')}}" class="text-blue-600 hover:text-blue-800 font-medium hover:underline">
                         {{ __('Reset password') }}
                     </a>
                 </div>

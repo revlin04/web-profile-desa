@@ -33,6 +33,7 @@ use App\Http\Controllers\VideoController;
 // Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 //     return view('dashboard');
 // })->name('dashboard');
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', 'App\Http\Controllers\User@index')->name('dashboard');
 //gallery
 Route::middleware(['auth:sanctum', 'verified'])->get('dashboard/gallery/destroy/{id}', 'App\Http\Controllers\GalleryController@destroy');
@@ -94,3 +95,4 @@ Route::get('profile', 'App\Http\Controllers\MisiController@index_fr');
 Route::get('/contact', 'App\Http\Controllers\Contact@index');
 Route::post('/contact/send', 'App\Http\Controllers\Contact@store');
 
+require __DIR__.'/auth.php';
