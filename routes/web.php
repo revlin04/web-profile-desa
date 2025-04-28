@@ -8,6 +8,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MisiController;
 use App\Http\Controllers\GalleryController;
+Use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\PortfolioController;
@@ -67,6 +68,14 @@ Route::middleware(['auth:sanctum', 'verified'])->get('dashboard/about/ubah/{id}'
 Route::middleware(['auth:sanctum', 'verified'])->resource('dashboard/misi', MisiController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('dashboard/misi/edit/{id}', 'App\Http\Controllers\MisiController@edit');
 Route::middleware(['auth:sanctum', 'verified'])->post('dashboard/misi/update', 'App\Http\Controllers\MisiController@update');
+
+
+Route::prefix('dashboard/users')->group(function () {
+    Route::get('/', [UsersController::class, 'index'])->name('users.index');
+    Route::post('/', [UsersController::class, 'store'])->name('users.store');
+    Route::put('/{id}', [UsersController::class, 'update'])->name('users.update');
+    Route::delete('/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
+});
 // frontend
 Route::get('/','App\Http\Controllers\FrontendController@index');
 //Route::get('App\Http\Controllers\FrontendController@index_footer');

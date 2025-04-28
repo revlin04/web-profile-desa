@@ -56,7 +56,7 @@
                                 {{ __('Berita') }}
                             </x-jet-nav-link>
                             
-                            <x-jet-nav-link href="/blog" :active="request()->routeIs('users*')">
+                            <x-jet-nav-link href="{{route('users.index')}}" :active="request()->routeIs('users*')">
                                 {{ __('Manage Users') }}
                             </x-jet-nav-link>
                         </div>
