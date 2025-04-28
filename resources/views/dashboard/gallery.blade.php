@@ -7,6 +7,16 @@
                 <i class="fas fa-plus mr-2"></i> Add New Photo
             </button>
         </div>
+        <div class="mb-6">
+            <nav class="flex space-x-4">
+                <a href="/dashboard/gallery" class="{{ request()->is('dashboard/gallery') ? 'bg-indigo-600 text-white' : 'text-gray-600 hover:text-gray-800' }} px-3 py-2 rounded-md text-sm font-medium">
+                    Foto
+                </a>
+                <a href="/dashboard/videos" class="{{ request()->is('dashboard/videos') ? 'bg-indigo-600 text-white' : 'text-gray-600 hover:text-gray-800' }} px-3 py-2 rounded-md text-sm font-medium">
+                    Video
+                </a>
+            </nav>
+        </div>
 
         <!-- Content -->
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
@@ -80,20 +90,25 @@
 
                 <h2 class="text-2xl mb-4" x-text="isEdit ? 'Edit Photo' : 'Add New Photo'"></h2>
 
-                <form @submit.prevent="submitForm($event)">
+                <form x-ref="formElement" method="POST" enctype="multipart/form-data" :action="isEdit ? `/dashboard/gallery/${form.id}` : '{{ route('gallery.store') }}'">
+                    @csrf
+                    <template x-if="isEdit">
+                        <input type="hidden" name="_method" value="PUT">
+                    </template>
+
                     <div class="mb-4">
                         <label class="block text-gray-700">Name</label>
-                        <input type="text" x-model="form.name" class="w-full mt-1 border-gray-300 rounded-md shadow-sm" required>
+                        <input type="text" name="name" x-model="form.name" class="w-full mt-1 border-gray-300 rounded-md shadow-sm" required>
                     </div>
 
                     <div class="mb-4">
                         <label class="block text-gray-700">Title</label>
-                        <input type="text" x-model="form.title" class="w-full mt-1 border-gray-300 rounded-md shadow-sm" required>
+                        <input type="text" name="title" x-model="form.title" class="w-full mt-1 border-gray-300 rounded-md shadow-sm" required>
                     </div>
 
-                    <div class="mb-4" x-show="!isEdit">
+                    <div class="mb-4">
                         <label class="block text-gray-700">Photo</label>
-                        <input type="file" x-ref="file" class="w-full mt-1 border-gray-300 rounded-md shadow-sm" required>
+                        <input type="file" x-ref="file" class="w-full mt-1 border-gray-300 rounded-md shadow-sm" :required="!isEdit">
                     </div>
 
                     <div class="flex justify-end">
@@ -108,61 +123,72 @@
 
     <!-- AlpineJS Logic -->
     <script>
-    function galleryCrud() {
-        return {
-            modalOpen: false,
-            isEdit: false,
-            form: {
-                id: null,
-                name: '',
-                title: '',
-            },
-            openAdd() {
-                this.modalOpen = true;
-                this.isEdit = false;
-                this.form = { id: null, name: '', title: '' };
-                if (this.$refs.file) this.$refs.file.value = '';
-            },
-            openEdit(id, name, title) {
-                this.modalOpen = true;
-                this.isEdit = true;
-                this.form = { id, name, title };
-            },
-            submitForm(e) {
-                const formData = new FormData();
-                formData.append('name', this.form.name);
-                formData.append('title', this.form.title);
+        function galleryCrud() {
+            return {
+                modalOpen: false,
+                isEdit: false,
+                form: {
+                    id: null,
+                    name: '',
+                    title: '',
+                },
+                openAdd() {
+                    this.modalOpen = true;
+                    this.isEdit = false;
+                    this.form = {
+                        id: null,
+                        name: '',
+                        title: ''
+                    };
+                    if (this.$refs.file) this.$refs.file.value = '';
+                },
+                openEdit(id, name, title) {
+                    this.modalOpen = true;
+                    this.isEdit = true;
+                    this.form = {
+                        id,
+                        name,
+                        title
+                    };
+                },
+                submitForm(e) {
+                    const formData = new FormData();
+                    formData.append('name', this.form.name);
+                    formData.append('title', this.form.title);
 
-                if (!this.isEdit && this.$refs.file?.files[0]) {
-                    formData.append('image', this.$refs.file.files[0]);
+                    if (this.$refs.file?.files[0]) {
+                        formData.append('image', this.$refs.file.files[0]);
+                    }
+
+                    if (this.isEdit) {
+                        formData.append('_method', 'PUT'); // ini WAJIB saat edit!
+                    }
+
+                    const url = this.isEdit ?
+                        `/dashboard/gallery/${this.form.id}` :
+                        `{{ route('gallery.store') }}`;
+
+                    fetch(url, {
+                            method: 'POST', // tetap POST, Laravel baca _method untuk edit
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            },
+                            body: formData,
+                        })
+                        .then(response => {
+                            if (!response.ok) throw new Error('Something went wrong!');
+                            return response.text(); // Karena redirect bukan JSON
+                        })
+                        .then(data => {
+                            this.modalOpen = false;
+                            window.location.reload();
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            alert('Ada sesuatu yang salah');
+                        });
                 }
-
-                const url = this.isEdit
-                    ? `/dashboard/gallery/${this.form.id}`
-                    : `{{ route('gallery.store') }}`;
-
-                fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        ...(this.isEdit && { 'X-HTTP-Method-Override': 'PUT' }),
-                    },
-                    body: formData,
-                })
-                .then(response => {
-                    if (!response.ok) throw new Error('Something went wrong!');
-                    return response.json();
-                })
-                .then(data => {
-                    this.modalOpen = false;
-                    window.location.reload();
-                })
-                .catch(error => {
-                    console.error(error);
-                    alert('Berhasil tambah data');
-                });
             }
         }
-    }
     </script>
 </x-app-layout>

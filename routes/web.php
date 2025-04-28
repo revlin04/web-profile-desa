@@ -45,6 +45,8 @@ Route::middleware(['auth:sanctum', 'verified'])->resource('/dashboard/videos', V
 Route::middleware(['auth:sanctum', 'verified'])->post('dashboard/videos/update', 'App\Http\Controllers\VideoController@update');
 //blog
 Route::middleware(['auth:sanctum', 'verified'])->get('dashboard/blog/destroy/{id}', 'App\Http\Controllers\BlogController@destroy');
+Route::middleware(['auth:sanctum', 'verified'])->get('dashboard/blog/edit/{id}', 'App\Http\Controllers\BlogController@edit');
+Route::middleware(['auth:sanctum', 'verified'])->post('dashboard/blog/update', 'App\Http\Controllers\BlogController@update');
 Route::middleware(['auth:sanctum', 'verified'])->resource('/dashboard/blog', BlogController::class);
 //home
 Route::middleware(['auth:sanctum', 'verified'])->resource('/dashboard/home', HomeController::class);

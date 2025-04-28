@@ -67,8 +67,9 @@ class galleryController extends Controller
 
         gallery::create($input);
 
-        return redirect('/dashboard/gallery')->with('success', 'gallery item created successfully.');
+        return redirect('/dashboard/gallery')->with('success', 'Gallery item created successfully.');
     }
+
 
     /**
      * Display the specified resource.
@@ -104,7 +105,7 @@ class galleryController extends Controller
         $input = $request->only('name', 'title');
 
         if ($request->hasFile('image')) {
-            // Hapus image lama jika ada
+            // Hapus file lama
             if ($gallery->image && file_exists(public_path('image/' . $gallery->image))) {
                 unlink(public_path('image/' . $gallery->image));
             }
@@ -118,8 +119,9 @@ class galleryController extends Controller
 
         $gallery->update($input);
 
-        return redirect('/dashboard/gallery')->with('success', 'gallery item updated successfully.');
+        return redirect('/dashboard/gallery')->with('success', 'Gallery item updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.

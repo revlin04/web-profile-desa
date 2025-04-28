@@ -19,7 +19,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-       $blog = DB::table('blogs') -> get();
+        $blog = Blog::latest()->paginate(5);
         // mengirim data blog ke view 
         return view('dashboard.blog', ['blog' => $blog]);
     }
@@ -27,19 +27,21 @@ class BlogController extends Controller
     public function index_fr()
     {
 
-         $posts = Blog::latest();
+        $posts = Blog::latest();
 
-        if(request('search')){
-            $posts->where('title', 'like', '%' . request('search'). '%');
+        if (request('search')) {
+            $posts->where('title', 'like', '%' . request('search') . '%');
         }
 
 
-         $home = Home::all();
+        $home = Home::all();
         $about = about::all();
         $blog = $posts->get();
-        return view('frontend.blog', ['blog' => $blog,
-        'about' => $about,
-            'home' => $home,]);
+        return view('frontend.blog', [
+            'blog' => $blog,
+            'about' => $about,
+            'home' => $home,
+        ]);
     }
     /**
      * Show the form for creating a new resource.
@@ -50,7 +52,7 @@ class BlogController extends Controller
     {
         return view('dashboard.add-blog');
     }
-   
+
 
     /**
      * Store a newly created resource in storage.
@@ -65,20 +67,20 @@ class BlogController extends Controller
             'author' => 'required',
             'title' => 'required|unique:blogs',
             'content' => 'required',
-            
+
         ]);
-  
+
         $input = $request->all();
-  
+
         if ($image = $request->file('image')) {
             $destinationPath = 'image/';
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $profileImage);
             $input['image'] = "$profileImage";
         }
-    
+
         Blog::create($input);
-     
+
         return redirect('/dashboard/blog');
     }
 
@@ -92,10 +94,10 @@ class BlogController extends Controller
     {
         //  return view('frontend.content-blog', [
         //     "blog" => $blog]);
-        
-            $count = DB::table('blogs')->count();
-         $blogs = DB::table('blogs') -> get();
-         return view('frontend.content-blog', ["blog" => $blog,"blogs" => $blogs,"count"=>$count]);
+
+        $count = DB::table('blogs')->count();
+        $blogs = DB::table('blogs')->get();
+        return view('frontend.content-blog', ["blog" => $blog, "blogs" => $blogs, "count" => $count]);
     }
 
     /**
@@ -105,10 +107,11 @@ class BlogController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {   
+    {
         $blog = Blog::findOrFail($id);
         return view('dashboard.edit-blog', [
-          'blog' => $blog]);
+            'blog' => $blog
+        ]);
     }
 
     /**
@@ -126,16 +129,16 @@ class BlogController extends Controller
             'content' => 'required',
         ]);
         $input = $request->all();
-         if ($image = $request->file('image')) {
+        if ($image = $request->file('image')) {
             $destinationPath = 'image/';
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $profileImage);
             $input['image'] = "$profileImage";
-        }else{
+        } else {
             unset($input['image']);
         }
-             $blog->update($input);
-             return redirect()->route('blog.index');
+        $blog->update($input);
+        return redirect()->route('blog.index');
     }
 
     /**
@@ -144,9 +147,9 @@ class BlogController extends Controller
      * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Blog $blog,$id)
+    public function destroy(Blog $blog)
     {
-        DB::table('blogs')->where('id', $id)->delete();
+        $blog->delete();
         return redirect('/dashboard/blog');
     }
 }

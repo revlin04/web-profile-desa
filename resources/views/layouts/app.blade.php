@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}" />
 
     @livewireStyles
-
+    <script src="//unpkg.com/alpinejs" defer></script>
     <!-- Scripts -->
     <script src="{{ mix('/js/app.js') }}" defer></script>
 </head>
@@ -48,7 +48,7 @@
                                 {{ __('Dashboard') }}
                             </x-jet-nav-link>
                             
-                            <x-jet-nav-link href="dashboard/gallery" :active="request()->routeIs('image*')">
+                            <x-jet-nav-link href="/dashboard/gallery" :active="request()->routeIs('image*')">
                                 {{ __('Image') }}
                             </x-jet-nav-link>
                             
