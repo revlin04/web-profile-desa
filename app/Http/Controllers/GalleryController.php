@@ -17,7 +17,7 @@ class galleryController extends Controller
     {
         $home = Home::all();
         $about = about::all();
-        $gallery = gallery::paginate(9); // Paginate 9 items per page (Frontend)
+        $gallery = gallery::paginate(3); 
 
         return view('frontend.gallery', [
             'gallery' => $gallery,

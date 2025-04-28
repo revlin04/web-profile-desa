@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Home;
 use App\Models\about;
 use App\Models\portfolio;
+use App\Models\gallery;
+use App\Models\misi;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreportfolioRequest;
 use App\Http\Requests\UpdateportfolioRequest;
@@ -24,8 +26,11 @@ class PortfolioController extends Controller
     public function index_fr()
     {   $about = about::all();
         $home = Home::all();
+        $homes = Home::all();
+        $gallery = gallery::paginate(2);
+        $misi = misi::paginate (3); 
         $portfolio = DB::table('portfolios') -> get();
-        return view('frontend.portfolio', ['portfolio' => $portfolio,'about' => $about,'home' => $home]);
+        return view('frontend.portfolio', ['portfolio' => $portfolio,'about' => $about,'home' => $home,'gallery' => $gallery,'misi'=>$misi,'homes'=>$homes]);
     }
     
 

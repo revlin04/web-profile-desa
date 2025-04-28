@@ -58,16 +58,7 @@
                     <a class="page-scroll" href="/portfolio">Profil</a>
                   </li>
                   <li class="nav-item">
-                    <a class="page-scroll" href="/blog">Berita</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="page-scroll" href="/gallery">Galeri</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="page-scroll" href="/profile">Wilayah</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="page-scroll" href="/contact">Contact</a>
+                    <a class="page-scroll" href="/contact">Kritik & Saran</a>
                   </li>
                 </ul>
 

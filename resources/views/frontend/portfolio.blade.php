@@ -52,9 +52,9 @@
           <div class="p-8">
             <h5 class="mb-1 text-xl font-bold text-gray-900">{{ $portfolio->name }}</h5>
             <a class="text-theme-color-2" href="/portfolio/{{ $portfolio->id }}">
-                    Baca Selengkapnya
-                    <i class="ml-2 lni lni-chevron-right"></i>
-                  </a>
+              Baca Selengkapnya
+              <i class="ml-2 lni lni-chevron-right"></i>
+            </a>
           </div>
         </div> <!-- single team -->
       </div>
@@ -63,6 +63,88 @@
       @endforelse
     </div> <!-- row -->
   </div> <!-- container -->
+  <div class="justify-center row">
+    <div class="w-full lg:w-2/3">
+      <div class="pb-8 text-center section-title">
+        <div class="m-auto line"></div>
+        <h3 class="title"><span>Galeri</span>Pages</h3>
+        <span class="mt-4"><a href="/gallery" class="text-blue-700 font-bold">Foto</a> | <a href="/gallery/videos" class="text-blue-500">Video</a> </span>
+      </div>
+      <!-- section title -->
+    </div>
+  </div>
+  <!-- row -->
+  <div class="justify-center row">
+    @forelse ($gallery as $gallery)
+    <div class="w-full sm:w-2/3 lg:w-1/3">
+      <div
+        class="mt-4 text-center single-team wow fadeIn"
+        data-wow-duration="1s"
+        data-wow-delay="0.5s">
+        <div class="relative team-image">
+          <img class="w-full max-h-60	" src="/image/{{ $gallery->image }}" alt="Team" />
+        </div>
+        <div class="p-8">
+          <h5 class="mb-1 text-xl font-bold text-gray-900">{{ $gallery->name }}</h5>
+          <p>{{ $gallery->title }}</p>
+        </div>
+      </div>
+
+      <!-- single team -->
+    </div>
+    @empty
+    <h1 class="text-center">Halaman Masih Kosong </h1>
+    @endforelse
+  </div>
+  <div class="mt-10 py-12 bg-white text-center">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
+      <div class="lg:text-center">
+        <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">Wilayah</h2>
+        @foreach ($homes as $homes)
+
+
+        <p class="mt-5 mb-5 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+          {{ $homes->title }}
+        </p>
+        @endforeach
+        @forelse ($misi as $misi)
+        <img class="inline-block h-60 w-60 rounded-full ring-2 ring-white" src="/image/{{ $misi->image }}" alt="">
+        <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+          {{ $misi->text }}
+        </p>
+      </div>
+
+      <div class="mt-10">
+        <div class="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+          <div class="relative">
+            <dt>
+              <p class="mt-10 ml-16 text-lg leading-6 font-bold text-gray-900">Deskripsi</p>
+            </dt>
+            <dd class="mt-2 ml-16 text-base text-gray-500">
+              {{ $misi->deskripsi }}
+            </dd>
+          </div>
+
+          <div class="relative">
+            <dt>
+              <p class="mt-10 ml-16 text-lg leading-6 font-bold text-gray-900">Tentang</p>
+            </dt>
+            <dd class="mt-2 ml-16 text-base text-gray-500">
+              {{ $misi->tentang }}
+            </dd>
+          </div>
+
+          </dl>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  @empty
+
+  <h1 class="mt-10">Halaman Masih Kosong</h1>
+  @endforelse
+  </div>
 </section>
 <footer id="footer" class="relative z-10 footer-area pt-120">
   <div
@@ -123,11 +205,8 @@
                 </div>
                 <ul class="link">
                   <li><a href="/">Home</a></li>
-                  <li><a href="gallery">Gallery</a></li>
-                  <li><a href="blog">Blog</a></li>
-                  <li><a href="profil">Profil</a></li>
-                  <li><a href="contact">Contact</a></li>
-                  <li><a href="profile">Wilayah</a></li>
+                  <li><a href="/profil">Profil</a></li>
+                  <li><a href="/contact">Contact</a></li>
                 </ul>
               </div>
               <!-- footer wrapper -->

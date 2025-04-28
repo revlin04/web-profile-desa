@@ -23,7 +23,7 @@
                         Berita
                     </a>
                     
-                    <a href="/blog" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('users*') ? 'bg-gray-100 text-gray-900' : 'text-gray-500 hover:text-gray-700' }}">
+                    <a href="{{route('dashboard.user')}}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('users*') ? 'bg-gray-100 text-gray-900' : 'text-gray-500 hover:text-gray-700' }}">
                         Manage Users
                     </a>
                 </div>
