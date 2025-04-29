@@ -206,35 +206,12 @@
                 <ul class="link">
                   <li><a href="/">Home</a></li>
                   <li><a href="/profil">Profil</a></li>
-                  <li><a href="/contact">Contact</a></li>
+                  <li><a href="/contact">Kritik dan Saran</a></li>
                 </ul>
               </div>
               <!-- footer wrapper -->
             </div>
           </div>
-        </div>
-        <div class="w-4/5 sm:w-1/3 md:w-2/5 lg:w-2/6">
-          <div
-            class="mt-12 footer-contact wow fadeIn"
-            data-wow-duration="1s"
-            data-wow-delay="0.8s">
-            <div class="footer-title">
-              <h4 class="mb-8 text-2xl font-bold text-white">Contact Us</h4>
-            </div>
-            <ul class="contact">
-              @foreach ($about as $about)
-
-
-              <li>{{ $about->phone }}</li>
-              <li>{{ $about->emails }}</li>
-
-              <li>
-                {{ $about->locations }}
-              </li>
-              @endforeach
-            </ul>
-          </div>
-          <!-- footer contact -->
         </div>
       </div>
       <!-- row -->
