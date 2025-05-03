@@ -23,7 +23,7 @@ class FrontendController extends Controller
      */
     public function index()
     {
-        $blog = Blog::all();
+        $blog = Blog::latest()->take(3)->get();
         $misi = misi::all();
         $gallery = gallery::all();
         $home = Home::all();
@@ -32,6 +32,7 @@ class FrontendController extends Controller
         $customer = customer::all();
         $about = about::all();
         $card = card::all();
+
         return view ('frontend.home',[
             'blog' => $blog,
             'misi' => $misi,

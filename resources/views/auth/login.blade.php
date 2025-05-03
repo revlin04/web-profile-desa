@@ -1,10 +1,14 @@
 <x-guest-layout>
+    <a href="/" class="flex items-center space-x-2">
+        <img src="images/logo.jpg" alt="Logo" class="h-10 w-10" />
+        <span class="text-black text-lg font-semibold">Marengan Daya</span>
+    </a>
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gradient-to-br from-sky-400 to-indigo-400">
         <div class="w-full sm:max-w-md mt-6 px-6 py-8 bg-white shadow-md overflow-hidden sm:rounded-lg">
             <div class="flex justify-center mb-6">
                 <img src="{{ asset('images/logo.jpg') }}" alt="Logo" class="w-24 h-24 rounded-full shadow-lg">
             </div>
-            
+
             <h2 class="text-center text-2xl font-bold text-gray-800 mb-6">Welcome Back</h2>
 
             <x-jet-validation-errors class="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-600" />
@@ -42,10 +46,10 @@
                         {{ __('Log in') }}
                     </x-jet-button>
                     <button type="reset" class="w-full justify-center mt-3 sm:mt-0 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-lg">
-        {{ __('Reset') }}
-    </button>
+                        {{ __('Reset') }}
+                    </button>
                 </div>
-                
+
                 <div class="flex items-center justify-between mt-6 text-sm">
                     <a href="/" class="flex items-center text-gray-600 hover:text-gray-900">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -53,7 +57,7 @@
                         </svg>
                         {{ __('Back to home') }}
                     </a>
-                    
+
                     @if (Route::has('password.request'))
                     <a class="text-blue-600 hover:text-blue-800 hover:underline" href="{{ route('password.request') }}">
                         {{ __('Forgot password?') }}
@@ -61,8 +65,8 @@
                     @endif
                 </div>
             </form>
-            
-            
+
+
         </div>
     </div>
 </x-guest-layout>

@@ -105,7 +105,7 @@
           <div class="blog-content">
             <ul class="flex mb-5 meta">
               <li>Author: <a href="javascript:void(0)">{{ $blog->author }}</a></li>
-              <li class="ml-12">{{ date('d-m-Y', strtotime($blog->created_at)); }}</li>
+              <li class="ml-12">{{ $blog->created_at->diffForHumans() }}</li>
             </ul>
             <p class="mb-6 text-2xl leading-snug text-gray-900">
               {{ $blog->title }}
