@@ -112,6 +112,9 @@
                     </div>
 
                     <div class="flex justify-end">
+                        <button type="reset" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded">
+                            Reset
+                        </button>
                         <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition">
                             Save
                         </button>

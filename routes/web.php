@@ -4,6 +4,7 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Contact;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MisiController;
@@ -71,6 +72,10 @@ Route::middleware(['auth:sanctum', 'verified'])->resource('dashboard/misi', Misi
 Route::middleware(['auth:sanctum', 'verified'])->get('dashboard/misi/edit/{id}', 'App\Http\Controllers\MisiController@edit');
 Route::middleware(['auth:sanctum', 'verified'])->post('dashboard/misi/update', 'App\Http\Controllers\MisiController@update');
 
+Route::prefix('dashboard/kritik')->group(function () {
+    Route::get('/', [ContactController::class, 'indexadmin'])->name('kritik.index');
+    Route::delete('/{id}', [ContactController::class, 'destroy'])->name('kritik.destroy');
+});
 
 Route::prefix('dashboard/users')->group(function () {
     Route::get('/', [UsersController::class, 'index'])->name('users.index');
@@ -93,7 +98,8 @@ Route::get('/portfolio/{id}', [PortfolioController::class, 'show'])->name('portf
 Route::get('portfolio', 'App\Http\Controllers\PortfolioController@index_fr');
 Route::get('profile', 'App\Http\Controllers\MisiController@index_fr');
 //Route::get('/','App\Http\Controllers\HomeController@index_home_blog');
-Route::get('/contact', 'App\Http\Controllers\Contact@index');
-Route::post('/contact/send', 'App\Http\Controllers\Contact@store');
+
+Route::get('/contact', [ContactController::class, 'index']);
+Route::post('/contact/send', [ContactController::class, 'store']);
 
 require __DIR__.'/auth.php';

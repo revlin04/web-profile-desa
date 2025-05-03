@@ -45,56 +45,66 @@
                 </table>
             </div>
         </div>
+        <<!-- Add User Modal -->
+            <div id="addUserModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div class="bg-white rounded-lg w-1/2 p-6 relative">
+                    <!-- Close Button -->
+                    <button type="button" onclick="closeAddModal()" class="absolute top-3 right-3 text-gray-600 hover:text-gray-900 text-lg">
+                        <i class="fas fa-times"></i>
+                    </button>
 
-        <!-- Add User Modal -->
-        <div id="addUserModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div class="bg-white rounded-lg w-1/2 p-6">
-                <h2 class="text-xl font-semibold mb-4">Add New User</h2>
-                <form action="{{ route('users.store') }}" method="POST">
-                    @csrf
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Name</label>
-                        <input type="text" name="name" required class="w-full border rounded px-3 py-2">
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Email</label>
-                        <input type="email" name="email" required class="w-full border rounded px-3 py-2">
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Password</label>
-                        <input type="password" name="password" required class="w-full border rounded px-3 py-2">
-                    </div>
-                    <div class="flex justify-end space-x-3">
-                        <button type="button" onclick="closeAddModal()" class="bg-gray-300 px-4 py-2 rounded">Cancel</button>
-                        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded">Save</button>
-                    </div>
-                </form>
+                    <h2 class="text-xl font-semibold mb-4">Add New User</h2>
+                    <form action="{{ route('users.store') }}" method="POST">
+                        @csrf
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Name</label>
+                            <input type="text" name="name" required class="w-full border rounded px-3 py-2">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Email</label>
+                            <input type="email" name="email" required class="w-full border rounded px-3 py-2">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Password</label>
+                            <input type="password" name="password" required class="w-full border rounded px-3 py-2">
+                        </div>
+                        <div class="flex justify-end space-x-3">
+                            <button type="button" onclick="closeAddModal()" class="bg-gray-300 px-4 py-2 rounded">Cancel</button>
+                            <button type="reset" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded">
+                                Reset
+                            </button>
+                            <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded">Save</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
+            <!-- Edit User Modal -->
+            <div id="editUserModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div class="bg-white rounded-lg w-1/2 p-6 relative">
+                    <!-- Close Button -->
+                    <button type="button" onclick="closeEditModal()" class="absolute top-3 right-3 text-gray-600 hover:text-gray-900 text-lg">
+                        <i class="fas fa-times"></i>
+                    </button>
 
-        <!-- Edit User Modal -->
-        <div id="editUserModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div class="bg-white rounded-lg w-1/2 p-6">
-                <h2 class="text-xl font-semibold mb-4">Edit User</h2>
-                <form id="editUserForm" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Name</label>
-                        <input type="text" name="name" id="edit-name" required class="w-full border rounded px-3 py-2">
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Email</label>
-                        <input type="email" name="email" id="edit-email" required class="w-full border rounded px-3 py-2">
-                    </div>
-                    <div class="flex justify-end space-x-3">
-                        <button type="button" onclick="closeEditModal()" class="bg-gray-300 px-4 py-2 rounded">Cancel</button>
-                        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded">Update</button>
-                    </div>
-                </form>
+                    <h2 class="text-xl font-semibold mb-4">Edit User</h2>
+                    <form id="editUserForm" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Name</label>
+                            <input type="text" name="name" id="edit-name" required class="w-full border rounded px-3 py-2">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Email</label>
+                            <input type="email" name="email" id="edit-email" required class="w-full border rounded px-3 py-2">
+                        </div>
+                        <div class="flex justify-end space-x-3">
+                            <button type="button" onclick="closeEditModal()" class="bg-gray-300 px-4 py-2 rounded">Cancel</button>
+                            <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded">Update</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
-
     </div>
 
     <script>

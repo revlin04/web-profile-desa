@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,10 +15,10 @@
     <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@1.16.6/dist/full.css" rel="stylesheet" type="text/css" />
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <!-- CKEditor -->
     <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
-    
+
     <!-- Custom Styles -->
     <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}" />
 
@@ -26,6 +27,7 @@
     <!-- Scripts -->
     <script src="{{ mix('/js/app.js') }}" defer></script>
 </head>
+
 <body class="font-sans antialiased">
     <x-jet-banner />
 
@@ -37,7 +39,7 @@
                     <div class="flex">
                         <!-- Logo -->
                         <div class="flex-shrink-0 flex items-center">
-                            <a href="{{ route('dashboard') }}">
+                            <a href="/">
                                 <x-jet-application-mark class="block h-9 w-auto" />
                             </a>
                         </div>
@@ -47,17 +49,21 @@
                             <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                                 {{ __('Dashboard') }}
                             </x-jet-nav-link>
-                            
+
                             <x-jet-nav-link href="/dashboard/gallery" :active="request()->routeIs('image*')">
                                 {{ __('Image') }}
                             </x-jet-nav-link>
-                            
+
                             <x-jet-nav-link href="/dashboard/blog" :active="request()->routeIs('blog*')">
                                 {{ __('Berita') }}
                             </x-jet-nav-link>
-                            
+
                             <x-jet-nav-link href="{{route('users.index')}}" :active="request()->routeIs('users*')">
                                 {{ __('Manage Users') }}
+                            </x-jet-nav-link>
+
+                            <x-jet-nav-link href="{{route('kritik.index')}}" :active="request()->routeIs('kritik*')">
+                                {{ __('Kritik & Saran') }}
                             </x-jet-nav-link>
                         </div>
                     </div>
@@ -79,24 +85,23 @@
 
                             <x-slot name="content">
                                 <!-- Account Management -->
-                                <div class="block px-4 py-2 text-xs text-gray-400">
-                                    {{ __('Manage Account') }}
-                                </div>
+                                < <x-jet-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
+                                    {{ __('Ubah Profil') }}
+                                    </x-jet-responsive-nav-link>
 
-                                <x-jet-dropdown-link href="{{ route('profile.show') }}">
-                                    {{ __('Profile') }}
-                                </x-jet-dropdown-link>
+                                    <x-jet-responsive-nav-link href="{{ route('profile.show') }}#update-password" :active="request()->routeIs('profile.show')">
+                                        {{ __('Ubah Password') }}
+                                    </x-jet-responsive-nav-link>
 
-                                <!-- Authentication -->
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
+                                    <!-- Authentication -->
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
 
-                                    <x-jet-dropdown-link href="{{ route('logout') }}"
-                                                        onclick="event.preventDefault();
-                                                                this.closest('form').submit();">
-                                        {{ __('Log Out') }}
-                                    </x-jet-dropdown-link>
-                                </form>
+                                        <x-jet-responsive-nav-link href="{{ route('logout') }}"
+                                            onclick="event.preventDefault(); this.closest('form').submit();">
+                                            {{ __('Log Out') }}
+                                        </x-jet-responsive-nav-link>
+                                    </form>
                             </x-slot>
                         </x-jet-dropdown>
                     </div>
@@ -119,15 +124,15 @@
                     <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-responsive-nav-link>
-                    
+
                     <x-jet-responsive-nav-link href="/gallery" :active="request()->routeIs('image*')">
                         {{ __('Image') }}
                     </x-jet-responsive-nav-link>
-                    
+
                     <x-jet-responsive-nav-link href="/blog" :active="request()->routeIs('blog*')">
                         {{ __('Berita') }}
                     </x-jet-responsive-nav-link>
-                    
+
                     <x-jet-responsive-nav-link href="/blog" :active="request()->routeIs('users*')">
                         {{ __('Manage Users') }}
                     </x-jet-responsive-nav-link>
@@ -145,11 +150,14 @@
                             <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
                         </div>
                     </div>
-
                     <div class="mt-3 space-y-1">
                         <!-- Account Management -->
                         <x-jet-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
-                            {{ __('Profile') }}
+                            {{ __('Ubah Profil') }}
+                        </x-jet-responsive-nav-link>
+
+                        <x-jet-responsive-nav-link href="{{ route('profile.show') }}#update-password" :active="request()->routeIs('profile.show')">
+                            {{ __('Ubah Password') }}
                         </x-jet-responsive-nav-link>
 
                         <!-- Authentication -->
@@ -157,8 +165,7 @@
                             @csrf
 
                             <x-jet-responsive-nav-link href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                        this.closest('form').submit();">
+                                onclick="event.preventDefault(); this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-jet-responsive-nav-link>
                         </form>
@@ -169,13 +176,12 @@
 
         <!-- Page Heading -->
         @if (isset($header))
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
+        <header class="bg-white shadow">
+            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                {{ $header }}
+            </div>
+        </header>
         @endif
-
         <!-- Page Content -->
         <main>
             {{ $slot }}
@@ -198,7 +204,7 @@
     <script src="{{ asset('js/vendor/jquery-3.5.1-min.js') }}"></script>
     <script src="{{ asset('js/vendor/modernizr-3.7.1.min.js') }}"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- CKEditor Initialization -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -212,7 +218,7 @@
             });
         });
     </script>
-    
+
     <!-- Additional Scripts -->
     <script src="{{ asset('js/plugins.js') }}"></script>
     <script src="{{ asset('js/slick.min.js') }}"></script>
@@ -222,4 +228,5 @@
     <script src="{{ asset('js/particles.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
 </body>
+
 </html>
