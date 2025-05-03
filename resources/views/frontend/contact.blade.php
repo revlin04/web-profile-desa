@@ -51,10 +51,14 @@
         <label class="block mb-2 text-sm font-bold text-gray-700">Kritik / Saran</label>
         <textarea name="message" rows="6" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required></textarea>
       </div>
-      <div class="text-center">
-        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded">
-          Kirim
-        </button>
+      <div class="flex justify-center space-x-4">
+  <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded">
+    Kirim
+  </button>
+  <button type="reset" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-6 rounded">
+    Reset
+  </button>
+</div>
       </div>
     </form>
   </div>

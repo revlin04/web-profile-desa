@@ -41,6 +41,9 @@
                     <x-jet-button class="w-full justify-center py-3 bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-600 text-white font-bold rounded-lg">
                         {{ __('Log in') }}
                     </x-jet-button>
+                    <button type="reset" class="w-full justify-center mt-3 sm:mt-0 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-lg">
+        {{ __('Reset') }}
+    </button>
                 </div>
                 
                 <div class="flex items-center justify-between mt-6 text-sm">
@@ -59,18 +62,7 @@
                 </div>
             </form>
             
-            <div class="mt-6 pt-6 border-t border-gray-200 flex flex-col items-center text-sm">
-                <p class="text-gray-600">{{ __('Don\'t have an account?') }}</p>
-                <div class="mt-2 space-x-3">
-                    <a href="{{route('register')}}" class="text-blue-600 hover:text-blue-800 font-medium hover:underline">
-                        {{ __('Sign up') }}
-                    </a>
-                    <span class="text-gray-400">|</span>
-                    <a href="{{route('password.request')}}" class="text-blue-600 hover:text-blue-800 font-medium hover:underline">
-                        {{ __('Reset password') }}
-                    </a>
-                </div>
-            </div>
+            
         </div>
     </div>
 </x-guest-layout>

@@ -52,9 +52,6 @@
               <div class="flex flex-col lg:flex-row lg:items-center lg:space-x-6">
                 <ul id="nav" class="navbar-nav lg:flex lg:items-center">
                   <li class="nav-item">
-                    <a class="page-scroll" href="/">Home</a>
-                  </li>
-                  <li class="nav-item">
                     <a class="page-scroll" href="/portfolio">Profil</a>
                   </li>
                   <li class="nav-item">
