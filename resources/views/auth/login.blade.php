@@ -33,14 +33,6 @@
                         <x-jet-input id="password" class="block mt-1 w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" type="password" name="password" required autocomplete="current-password" />
                     </div>
                 </div>
-
-                <div class="block mt-4">
-                    <label for="remember_me" class="flex items-center">
-                        <x-jet-checkbox id="remember_me" name="remember" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
-                        <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                    </label>
-                </div>
-
                 <div class="mt-6">
                     <x-jet-button class="w-full justify-center py-3 bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-600 text-white font-bold rounded-lg">
                         {{ __('Log in') }}

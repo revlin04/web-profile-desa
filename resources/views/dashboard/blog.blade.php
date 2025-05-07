@@ -1,5 +1,6 @@
 <x-app-layout>
     <div class="py-6" x-data="{ addModal: false, editModal: false, editData: {} }">
+
         <!-- Header -->
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold text-gray-800">Manage Blog Posts</h2>
@@ -42,6 +43,16 @@
                     <p class="text-lg font-semibold">{{ $blog->sortByDesc('created_at')->first() ? date('d M Y', strtotime($blog->sortByDesc('created_at')->first()->created_at)) : 'No posts' }}</p>
                 </div>
             </div>
+        </div>
+        <!-- Search Bar -->
+        <div class="mb-4 flex justify-end">
+            <form action="{{ route('blog.index') }}" method="GET" class="flex items-center space-x-2">
+                <input type="text" name="search" placeholder="Search title..." value="{{ request('search') }}"
+                    class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
+                    <i class="fas fa-search mr-1"></i> Search
+                </button>
+            </form>
         </div>
 
         <!-- Blog List Table -->
@@ -95,7 +106,7 @@
                     </tbody>
                 </table>
                 <div class="p-4">
-                    {{ $blog->links() }}
+                {{ $blog->appends(request()->query())->links() }}
                 </div>
             </div>
         </div>

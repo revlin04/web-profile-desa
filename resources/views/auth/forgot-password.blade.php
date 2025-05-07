@@ -25,9 +25,13 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <x-jet-button>
+                <button type="reset" class="w-full justify-center mt-3 sm:mt-0 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-lg">
+                    {{ __('Reset') }}
+                </button>
+                <x-jet-button class="w-full justify-center mt-3 sm:mt-0 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-lg">
                     {{ __('Email Password Reset Link') }}
                 </x-jet-button>
+
             </div>
         </form>
         <a href="/login" class="flex items-center text-gray-600 hover:text-gray-900">

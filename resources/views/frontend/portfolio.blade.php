@@ -8,8 +8,27 @@
     <div class="justify-center row">
       <div class="w-full lg:w-2/3">
         <div class="pb-8 text-center section-title">
+
           <div class="m-auto line"></div>
           <h3 class="title"><span>Profil</span></h3>
+          <div class="flex justify-center space-x-4 mb-4 text-xl text-gray-600">
+              <a href="https://wa.me" target="_blank" title="WhatsApp">
+                <i class="fab fa-whatsapp hover:text-green-500"></i>
+              </a>
+              <a href="https://instagram.com" target="_blank" title="Instagram">
+                <i class="fab fa-instagram hover:text-pink-500"></i>
+              </a>
+              <a href="https://youtube.com" target="_blank" title="YouTube">
+                <i class="fab fa-youtube hover:text-red-600"></i>
+              </a>
+              <a href="/" title="Telepon">
+                <i class="fas fa-phone hover:text-blue-500"></i>
+              </a>
+              <a href="https://t.me" target="_blank" title="Telegram">
+                <i class="fab fa-telegram hover:text-sky-500"></i>
+              </a>
+            </div>
+          </div>
         </div> <!-- section title -->
       </div>
     </div> <!-- row -->

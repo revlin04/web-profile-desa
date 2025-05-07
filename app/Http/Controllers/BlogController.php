@@ -19,10 +19,16 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blog = Blog::latest()->paginate(5);
-        // mengirim data blog ke view 
+        $query = Blog::latest();
+
+        if (request('search')) {
+            $query->where('title', 'like', '%' . request('search') . '%');
+        }
+
+        $blog = $query->paginate(5);
         return view('dashboard.blog', ['blog' => $blog]);
     }
+
 
     public function index_fr()
     {

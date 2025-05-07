@@ -8,11 +8,23 @@ use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
-    public function index()
-    {
-        $users = User::all();
-        return view('dashboard.user', compact('users'));
+    public function index(Request $request)
+{
+    $query = User::query();
+
+    if ($request->has('search') && $request->search != '') {
+        $search = $request->search;
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+              ->orWhere('email', 'like', "%{$search}%");
+        });
     }
+
+    $users = $query->get();
+
+    return view('dashboard.user', compact('users'));
+}
+
 
     public function store(Request $request)
     {

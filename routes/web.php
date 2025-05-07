@@ -36,7 +36,6 @@ use App\Http\Controllers\VideoController;
         return view('dashboard');
     })->name('dashboard');
 //});
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', 'App\Http\Controllers\User@index')->name('dashboard');
 //gallery
 Route::middleware(['auth:sanctum', 'verified'])->get('dashboard/gallery/destroy/{id}', 'App\Http\Controllers\GalleryController@destroy');
 Route::middleware(['auth:sanctum', 'verified'])->get('dashboard/gallery/edit/{id}', 'App\Http\Controllers\GalleryController@edit');
