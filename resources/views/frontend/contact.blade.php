@@ -46,7 +46,7 @@
     @foreach($comments as $comment)
     <div class="mb-6 p-4 bg-gray-50 border border-gray-200 rounded-lg shadow-sm">
       <div class="flex justify-between items-center mb-2">
-        <h3 class="text-lg font-semibold text-gray-700">{{ $comment->name }}</h3>
+      <h3 class="text-lg font-semibold text-gray-700">@anonymizeName($comment->name)</h3>
         <span class="text-sm text-gray-500">{{ $comment->created_at->format('d M Y') }}</span>
       </div>
       <p class="text-gray-600 whitespace-pre-line">{{ $comment->message }}</p>
